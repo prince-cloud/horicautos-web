@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Horic Autos — Website
 
-## Getting Started
+A futuristic, premium car-sales website for **Horic Autos** (car import & sales,
+showroom opening soon). Built with **Next.js 16 + TypeScript + Tailwind CSS v4 +
+Framer Motion**. Design language blends Tesla (minimal/cinematic), Mercedes-Benz
+(luxury polish) and Jetour (bold model showcases), in the brand's red/black/white.
 
-First, run the development server:
+## Pages
+- `/` — cinematic home (hero, featured cars, why-Horic, brands, showroom-soon)
+- `/inventory` — browsable inventory with live search + filters (make, type, sort)
+- `/inventory/[slug]` — car detail (gallery, specs, WhatsApp inquire, book test drive)
+- `/about` — story + how-we-work
+- `/contact` — booking form (sends lead via WhatsApp), contacts, map
 
+## Run it locally
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # start dev server → http://localhost:3000
+npm run build    # production build
+npm run start    # serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✏️ Things you’ll want to edit
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Business details — `src/lib/site.ts`
+Set the real **WhatsApp number** (international format, digits only, e.g.
+`233241234567`), phone, email, and showroom address. These flow through the whole
+site (WhatsApp buttons, footer, contact page).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Cars — `src/lib/cars.ts`
+Each car is one entry in the `cars` array. Copy an entry, change the values, and
+point `images` at real photos. To use **real Horic Autos photos**:
+- Drop image files into the `public/` folder (e.g. `public/cars/m5-1.jpg`) and set
+  `images: ["/cars/m5-1.jpg", "/cars/m5-2.jpg"]`, **or**
+- Use a hosted image URL. If it's a new domain (not `images.unsplash.com`), add the
+  hostname to `next.config.ts` under `images.remotePatterns`.
 
-## Learn More
+> The current photos are high-quality stand-ins from Unsplash so the site looks
+> finished today — swap them for the actual stock when ready.
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Logo
+`public/logo.jpg` is the Horic Autos logo. Replace the file (keep the name) to update.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
+Easiest is **Vercel** (made by the Next.js team, free tier):
+1. Push this folder to a GitHub repo.
+2. Import the repo at https://vercel.com/new → it auto-detects Next.js → Deploy.
+Any Node host works too (`npm run build` then `npm run start`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- The booking form has **no backend** — on submit it opens WhatsApp with the
+  customer's details pre-filled, so leads come straight to your phone. (A
+  database/email backend can be added later if you want stored bookings.)
