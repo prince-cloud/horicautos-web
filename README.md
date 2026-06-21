@@ -46,6 +46,31 @@ Easiest is **Vercel** (made by the Next.js team, free tier):
 2. Import the repo at https://vercel.com/new → it auto-detects Next.js → Deploy.
 Any Node host works too (`npm run build` then `npm run start`).
 
+## Run with Docker
+A production `Dockerfile` (multi-stage, non-root, slim runtime) and
+`docker-compose.yml` are included.
+
+**With Docker Compose (recommended):**
+```bash
+docker compose up -d --build      # build the image and start it
+# → app is live at http://localhost:3000
+docker compose logs -f            # view logs
+docker compose down               # stop & remove
+```
+
+**With plain Docker:**
+```bash
+docker build -t horic-autos-web .
+docker run -d -p 3000:3000 --name horic-autos-web horic-autos-web
+```
+
+Notes:
+- The app listens on port **3000** inside the container; change the host port by
+  editing the `ports` mapping in `docker-compose.yml` (e.g. `"8080:3000"`).
+- The image runs `next start` in production mode as a non-root user, with a
+  built-in healthcheck.
+- Rebuild after code or inventory changes: `docker compose up -d --build`.
+
 ## Notes
 - The booking form has **no backend** — on submit it opens WhatsApp with the
   customer's details pre-filled, so leads come straight to your phone. (A
