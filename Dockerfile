@@ -28,7 +28,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+ENV PORT=3755
 ENV HOSTNAME=0.0.0.0
 
 # Run as a non-root user
@@ -42,7 +42,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.ts ./next.config.ts
 
 USER nextjs
-EXPOSE 3000
+EXPOSE 3755
 
-# `next start` — binds to 0.0.0.0:$PORT
+# `next start` — binds to 0.0.0.0:3755 (see the start script)
 CMD ["npm", "run", "start"]
